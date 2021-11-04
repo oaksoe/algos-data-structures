@@ -28,17 +28,20 @@ console.log('Bubble sort: ', arr1, bubbleSortedArr);
 
 // Complexity: (n-1) + (n-2) + ... + 2 + 1 = 1/2 * n * (n-1) => O(n ** 2)
 const selectionSort = (arr) => {
-  let subArr = subArray(arr, 0, arr.length);
-
   for (let i = 0; i < arr.length - 1; i++) {
+    let minIndex = i;
+    let minItem = arr[i];
+
     // find smallest number
-    const { index: minIndex } = minValue(subArr);
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < minItem) {
+        minIndex = j;
+        minItem = arr[j];
+      }
+    }
 
-    // swap smallest value with arr[i] which is theoretically subArr[0]
-    swap(arr, i, i + minIndex);
-
-    // create a subarray without the first one
-    subArr = subArray(arr, i + 1, arr.length - i - 1);
+    // swap smallest number with the value at current index i
+    swap(arr, i, minIndex);
   }
   
   return arr;
