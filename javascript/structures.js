@@ -208,3 +208,99 @@ linkedList.remove(0);
 linkedList.remove(5);
 linkedList.remove(2);
 console.log('Linked list: ', linkedList.asArray());
+
+// ###################### Binary Search Tree ######################
+class TreeNode {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
+    }
+
+    insert(item) {
+        const newNode = new TreeNode(item);
+
+        if (!this.root) {
+            this.root = newNode;
+        } else {
+            this.insertNode(this.root, newNode);
+        }
+    }
+
+    insertNode(parentNode, newNode) {
+        if (newNode.value < parentNode.value) {
+            if (!parentNode.left) {
+                parentNode.left = newNode;
+            } else {
+                this.insertNode(parentNode.left, newNode);
+            }
+        } else {
+            if (!parentNode.right) {
+                parentNode.right = newNode;
+            } else {
+                this.insertNode(parentNode.right, newNode);
+            }
+        }   
+    }
+
+    preorder(node) {
+        if (node) {
+            console.log(node.value);
+            this.preorder(node.left);
+            this.preorder(node.right);
+        }
+    }
+
+    inorder(node) {
+        if (node) {
+            this.inorder(node.left);
+            console.log(node.value);
+            this.inorder(node.right);
+        }
+    }
+
+    postorder(node) {
+        if (node) {
+            this.postorder(node.left);
+            this.postorder(node.right);
+            console.log(node.value);
+        }
+    }
+
+    search(node, item) {
+        if (!node) {
+            return false;
+        }
+
+        if (item < node.value) {
+            return this.search(node.left, item);
+        }
+
+        if (item > node.value) {
+            return this.search(node.right, item);
+        }
+
+        return true;
+    }
+}
+
+const arr1 = [16, 30, 24, 7, 62, 45, 5, 55];
+const arr2 = [1, 2, 3, 4, 5, 6, 7, 8];
+const arr3 = [8, 7, 6, 5, 4, 3, 2, 1];
+
+const binarySearchTree = new BinarySearchTree();
+arr1.forEach(item => binarySearchTree.insert(item));
+console.log('Preorder traversal');
+binarySearchTree.preorder(binarySearchTree.root);
+console.log('Inorder traversal');
+binarySearchTree.inorder(binarySearchTree.root);
+console.log('Postorder traversal');
+binarySearchTree.postorder(binarySearchTree.root);
+const found = binarySearchTree.search(binarySearchTree.root, 44);
+console.log('found: ', found);
