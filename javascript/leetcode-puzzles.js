@@ -19,3 +19,28 @@ var middleNode = function(head) {
     
     return midNode;
 };
+
+
+// https://leetcode.com/problems/populating-next-right-pointers-in-each-node
+
+var setNext = function(curNode) {
+    if (curNode && curNode.left) {
+        curNode.left.next = curNode.right;
+        
+        if (curNode.next) {
+            curNode.right.next = curNode.next.left;
+        }
+        
+        setNext(curNode.left);
+        setNext(curNode.right);
+    }
+}
+
+/**
+ * @param {Node} root
+ * @return {Node}
+ */
+var connect = function(root) {
+    setNext(root);
+    return root;
+};
