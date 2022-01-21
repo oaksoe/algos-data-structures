@@ -169,3 +169,185 @@ const maxPathSum = (root) => {
     const maxChildPathSum = Math.max(maxPathSum(root.left), maxPathSum(root.right));
     return root.val + maxChildPathSum;
 }
+
+// Graph: https://www.youtube.com/watch?v=tWVWeAqZ0WU
+// Depth first traversal
+const graph = {
+    a: ['b', 'c'],
+    b: ['d'],
+    c: ['e'],
+    d: ['f'],
+    e: [],
+    f: []
+}
+
+depthFirstGraph(graph, 'a');
+
+const depthFirstGraph = (graph, source) => {
+    const stack = [source];
+
+    while (stack.length > 0) {
+        const current = stack.pop();
+        console.log(current);
+
+        for (let neighbor of graph[current]) {
+            stack.push(neighbor);
+        }
+    }
+}
+
+const depthFirstGraphRC = (graph, source) => {
+    console.log(source);
+
+    for (let neighbor of graph[source]) {
+        depthFirstGraphRC(graph, neighbor);
+    }
+}
+
+const breadthFirstGraph = (graph, source) => {
+    const queue = [source];
+
+    while (stack.length > 0) {
+        const current = queue.shift();
+        console.log(current);
+
+        for (let neighbor of graph[current]) {
+            queue.push(neighbor);
+        }
+    }
+}
+
+// has-path: depthFirstRC and breadthFirstIter
+const edges = [
+    ['i', 'j'],
+    ['k', 'i'],
+    ['m', 'k'],
+    ['k', 'l'],
+    ['o', 'n']
+]
+// convert edge list to adjacency list
+const buildGraph = (edges) => {
+    const graph = {};
+
+    for (let edge of edges) {
+        const [a,b] = edge;
+
+        if (!(a in graph))  graph[a] = [];
+        if (!(b in graph))  graph[b] = [];
+
+        graph[a].push(b);
+        graph[b].push(a);
+    }
+
+    return graph;
+}
+
+const undirectedPath = (edges, nodeA, nodeB) => {
+    const graph = buildGraph(edges);
+    return hasPath(graph, nodeA, nodeB, new Set());
+}
+
+const hasPath = (graph, src, dst) => {
+    if (src === dst) return true;
+    if (visited.has(src)) return false;
+
+    visited.add(src);
+
+    for (let neighbor of graph[src]) {
+        if (hasPath(graph, neighbor, dst)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// connected component count
+const connectedComponentCount = (graph) => {
+    const visited = new Set();
+    const count = 0;
+
+    for (let node of graph) {
+        if (explore(graph, node, visited)) {
+            count += 1;
+        }
+    }
+
+    return count;
+}
+
+const explore = (graph, current, visited) => {
+    if (visited.has(String(current)))   return false;
+
+    visited.add(String(current));
+
+    for (let neighbor of graph[current]) {
+        explore(graph, neighbor, visited);
+    }
+
+    return true;
+}
+
+// largest Connected Component
+
+// Shortest path
+const shortestPath = (edges, nodeA, nodeB) => {
+    const graph = buildGraph(edges);
+    const visited = new Set([nodeA]);
+    const queue = [[nodeA, 0]];
+
+    while (queue.length > 0) {
+        const [node, distance] = queue.shift();
+
+        if (node === nodeB) return distance;
+
+        for (let neighbor of graph[node]) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                queue.push([neighbor, distance+1]);
+            }
+        }
+    }
+
+    return -1;
+}
+
+// island count
+const islandCount = (grid) => {
+    const visited = new Set();
+    let count = 0;
+
+    for (let r = 0; r < grid.length; r+=1) {
+        for (let c = 0; c < grid[0].length; c+=1) {
+            if (explore(grid, r, c, visited)) {
+                count += 1;
+            }
+        }
+    }
+
+    return count;
+}
+
+const explore = (grid, r, c, visited) => {
+    const rowInbounds = 0 <= r && r < grid.length;
+    const colInbounds = 0 <= c && c < grid.length;
+
+    if (!rowInbounds || !colInbounds)   return false;
+
+    if (grid[r][c] === 'Water') return false;
+
+    const pos = r + ',' + c;
+
+    if (visited.has(pos)) return false;
+
+    visited.add(pos);
+
+    explore(grid, r-1, c, visited);
+    explore(grid, r+1, c, visited);
+    explore(grid, r, c-1, visited);
+    explore(grid, r, c+1, visited);
+
+    return true;
+}
+
+// minimum island size
