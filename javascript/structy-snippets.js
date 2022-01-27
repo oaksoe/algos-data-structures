@@ -247,7 +247,7 @@ const undirectedPath = (edges, nodeA, nodeB) => {
     return hasPath(graph, nodeA, nodeB, new Set());
 }
 
-const hasPath = (graph, src, dst) => {
+const hasPath = (graph, src, dst, visited) => {
     if (src === dst) return true;
     if (visited.has(src)) return false;
 
@@ -330,7 +330,7 @@ const islandCount = (grid) => {
 
 const explore = (grid, r, c, visited) => {
     const rowInbounds = 0 <= r && r < grid.length;
-    const colInbounds = 0 <= c && c < grid.length;
+    const colInbounds = 0 <= c && c < grid[0].length;
 
     if (!rowInbounds || !colInbounds)   return false;
 
@@ -351,3 +351,72 @@ const explore = (grid, r, c, visited) => {
 }
 
 // minimum island size
+
+// Dynamic Programming
+const fib = (n) => {
+    if (n <= 2) return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+// with memoization
+const fibMemo = (n, memo = {}) => {
+    if (n in memo)  return memo[n];
+    if (n <= 2) return 1;
+
+    memo[n] = fibMemo(n-1, memo) + fibMemo(n-2, memo);
+    return memo[n];
+}
+
+// with tabulation
+const fibTab = (n) => {
+    const table = Array(n+1).fill(0);
+    table[1] = 1;
+
+    for(let i = 0; i <= n; i++) {
+        table[i+1] += table[i];
+        table[i+2] += table[i]; 
+    }
+
+    return table[n];
+}
+
+// Grid traveller
+// How many ways to travel from top left cell to bottom right cell in m*n grid?
+// Traveller can either move right or down
+const gridTraveller = (m,n) => {
+    if (m === 1 && n === 1) return 1;
+    if (m === 0 || n === 0) return 0;
+    return gridTraveller(m-1, n) + gridTraveller(m, n-1);
+}
+
+const gridTravellerMemo = (m,n, memo={}) => {
+    const key = m + ',' + n;
+
+    if (key in memo) return memo[key];
+
+    if (m === 1 && n === 1) return 1;
+    if (m === 0 || n === 0) return 0;
+    
+    memo[key] = gridTraveller(m-1, n, memo) + gridTraveller(m, n-1, memo);
+    return memo[key];
+}
+
+// CanSum
+const canSum = (targetSum, numbers) => {
+    if (targetSum === 0) return true;
+    if (targetSum < 0) return false;
+
+    for (let num of numbers) {
+        const diff = targetSum - num;
+
+        if (canSum(diff, numbers)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// HowSum and BestSum
+
+// canConstruct, countConstruct, allConstruct
