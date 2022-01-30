@@ -107,11 +107,11 @@ const depthFirstValues = (root) => {
     return values;
 }
 
-const depthFirstValues = (root) => {
+const depthFirstValuesRC = (root) => {
     if (root === null) return [];
 
-    const leftValues = depthFirstValues(root.left);
-    const rightValues = depthFirstValues(root.right);
+    const leftValues = depthFirstValuesRC(root.left);
+    const rightValues = depthFirstValuesRC(root.right);
 
     return [root.val, ...leftValues, ...rightValues];
 }
@@ -128,8 +128,8 @@ const breadthFirstValues = (root) => {
         const current = queue.shift();
         values.push(current);
 
-        if (current.left !== null) queue.push(current.left);
-        if (current.right !== null) queue.push(current.right);
+        if (current.left !== null) queue.push(current.right);
+        if (current.right !== null) queue.push(current.left);
     }
 
     return values;
@@ -254,7 +254,7 @@ const hasPath = (graph, src, dst, visited) => {
     visited.add(src);
 
     for (let neighbor of graph[src]) {
-        if (hasPath(graph, neighbor, dst)) {
+        if (hasPath(graph, neighbor, dst, visited)) {
             return true;
         }
     }
@@ -399,6 +399,25 @@ const gridTravellerMemo = (m,n, memo={}) => {
     
     memo[key] = gridTraveller(m-1, n, memo) + gridTraveller(m, n-1, memo);
     return memo[key];
+}
+
+const gridTravellerTab = (m, n) => {
+    const table = Array(m + 1)
+        .fill()
+        .map(() => Array(n+1).fill(0));
+
+    table[1][1] = 1;
+
+    for (let i = 0; i <= m; i++) {
+        for (let j = 0; j <= n; j++) {
+            const current = table[i][j];
+
+            if (j+1 <=n)    table[i][j+1] += current;
+            if (i+1 <=m)    table[i+1][j] += current;
+        }
+    }
+
+    return table[m][n];
 }
 
 // CanSum

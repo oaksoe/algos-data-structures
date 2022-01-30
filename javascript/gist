@@ -1,0 +1,5 @@
+Use hashmap/JS object {} to optimize time complexity. Complexity is O(1). It's a time/space tradeoff.
+
+One pass O(n) instead of two passes O(n*n)
+- use hashmap O(1)
+- use two pointers for either index, or variables to store
