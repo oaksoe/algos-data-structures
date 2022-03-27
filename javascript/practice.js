@@ -304,3 +304,24 @@ const explore = (grid, r, c, visited) => {
     return true;
 }
 
+// Binary Search
+var biSearch = function(list, num) {
+    let left = 0;
+    let right = list.length - 1;
+    
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        
+        if (list[mid] === num) {
+            return mid;
+        }
+        
+        if (list[mid] < num) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return left;
+}

@@ -1,5 +1,19 @@
 Use hashmap/JS object {} to optimize time complexity. Complexity is O(1). It's a time/space tradeoff.
 
+Use set `new Set()` O(1) instead of `[]` O(n) to find an item in array
+
 One pass O(n) instead of two passes O(n*n)
-- use hashmap O(1)
+- use hashmap O(1) or set O(1)
 - use two pointers for either index, or variables to store
+  - sliding windows with 2 pointers (start and end) with
+    - end pointer moving
+    - start pointer moving
+    - both pointers moving
+- use tabulation recipe
+
+Beware of diff between if(!(count in map)) and if(!count in map)
+
+If you think your solution has high complexity O(n*n), find an optimized solution instead of wasting time on it, which
+won't be accepted anyway!!!
+
+Common mistakes. Added memo but still time exceeded! Why?? Because forgot to pass it in recursive func call!!!

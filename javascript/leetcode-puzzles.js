@@ -173,3 +173,63 @@ console.log(asteroidsDestroyed(10, [3,9,19,5,21]));
 console.log(asteroidsDestroyed(5, [4,9,23,4]));
 
 // https://leetcode.com/contest/weekly-contest-274/problems/maximum-employees-to-be-invited-to-a-meeting/
+
+// https://leetcode.com/contest/weekly-contest-278/problems/keep-multiplying-found-values-by-two/
+var findFinalValue = function(nums, original) {
+    const map = {};
+    
+    for (let i = 0; i < nums.length; i++) {
+        map[nums[i]] = i;
+    }
+    
+    let newOriginal = original;
+    
+    while(map[newOriginal] !== undefined) {
+        newOriginal *= 2;
+    };
+    
+    return newOriginal;
+};
+
+console.log('final value', findFinalValue([5,3,6,1,12], 3));
+
+// https://leetcode.com/contest/weekly-contest-278/problems/all-divisions-with-the-highest-score-of-a-binary-array/
+// Issue: time limit exceeded!
+var maxScoreIndices = function(nums) {
+    let numsL, numsR;
+    let maxCount = 0;
+    const map = {};
+    
+    for (let i=0; i<= nums.length; i++) {
+        numsL = [...nums];
+        numsR = numsL.splice(i);
+
+        let count = 0;
+
+        for (let num of numsL) {
+            if (num === 0) count++;
+        }
+
+        for (let num of numsR) {
+            if (num === 1) count++;
+        }
+
+        if (maxCount < count) {
+            maxCount = count;
+        }
+
+        if (!(count in map)) {
+            map[count] = [];
+        }
+
+        map[count].push(i);
+    }
+
+    return map[maxCount];
+};
+
+console.log(maxScoreIndices([0,0,1,0]));
+
+// https://leetcode.com/contest/weekly-contest-278/problems/find-substring-with-given-hash-value/
+
+// https://leetcode.com/contest/weekly-contest-278/problems/groups-of-strings/
