@@ -159,3 +159,158 @@ const anagrams = (s1, s2) => {
 
 console.log(anagrams('restful', 'fluster'));
 console.log(anagrams('cats', 'tocs'));
+
+// mostFrequentChar
+const mostFrequentChar = (s) => {
+  const map = {};
+
+  for (let i = 0; i < s.length; i += 1) {
+    const char = s[i];
+
+    if (!(char in map)) {
+      map[char] = 0;
+    }
+
+    map[char] += 1;
+  }
+
+  let max = 0;
+  let freqChar = '';
+
+  for (let char in map) {
+    if (map[char] > max) {
+      max = map[char];
+      freqChar = char;
+    }
+  }
+
+  return freqChar;
+};
+
+// Solution by Ashraf (Credit: Ashraf)
+// const mostFrequentChar = (s) => {
+//   const map = {}
+  
+//   for(let i = 0; i < s.length; ++i){
+//     if(s[i] in map) map[s[i]] += 1;
+//     else map[s[i]] = 1;
+//   }
+  
+//   let max = s[0];
+  
+//   for(let char in map){
+//     if(map[char] > map[max]){
+//       max = char
+//     }
+//   }
+  
+//   return max
+// };
+
+console.log(mostFrequentChar('bookeeper'));
+
+// pairSum
+const pairSum = (numbers, targetSum) => {
+  const map = {};
+
+  for (let i = 1; i < numbers.length; i += 1) {
+    map[numbers[i]] = i;
+  }
+  
+  for (let i = 0; i < numbers.length; i += 1) {
+    const remainder = targetSum - numbers[i];
+
+    if (remainder in map) {
+      return [i, map[remainder]];
+    }
+  }
+
+  return null;
+}
+
+// Solution by Ashraf (Credit: Ashraf)
+// const pairSum = (numbers, targetSum) => { 
+//   /*
+//   // time O(n^2)
+//   // space O(1)
+//   for(let i = 0; i < numbers.length; ++i){
+//     for(let j = i + 1; j < numbers.length; ++j){
+//       if(numbers[i] + numbers[j] === targetSum) return [i, j];
+//     }
+//   }
+//   */
+  
+  
+//   // time O(n)
+//   // space O(n)
+  
+//   const complementMap = {};
+  
+//   for(let i = 0; i < numbers.length; ++i){
+//     const num = numbers[i];
+//     complementMap[targetSum - num] = i;
+//   }
+  
+//   for(let i = 0; i < numbers.length; ++i){
+//     const num = numbers[i];
+//     if(num in complementMap && complementMap[num] !== i) return [complementMap[num], i]
+//   }
+
+// };
+
+console.log(pairSum([3, 2, 5, 4, 1], 8));
+
+// pairProduct
+const pairProduct = (numbers, targetProduct) => { 
+  const map = {};
+
+  for (let i = 0; i < numbers.length; i += 1) {
+    if (targetProduct % numbers[i] === 0) {
+      map[numbers[i]] = i;
+    }
+  }
+  
+  for (const num in map) {
+    const remainder = targetProduct / num;
+
+    if (remainder in map) {
+      return [map[num], map[remainder]];
+    }
+  }
+
+  return null;
+}
+
+// Solution by Ashraf (Credit: Ashraf)
+// const pairProduct = (numbers, targetProduct) => { 
+  
+//   /*
+//   // time O(n^2)
+//   // space O(1)
+//   for(let i = 0; i < numbers.length; ++i){
+//     for(let j = i + 1; j < numbers.length; ++j){
+//       if(numbers[i] * numbers[j] === targetProduct) return [i, j];
+//     }
+//   }
+//   */
+  
+//   // time O(n)
+//   // space O(n)
+  
+//   const map = {};
+  
+//   for(let i = 0; i < numbers.length; ++i){
+//     const num = numbers[i];
+//     if(targetProduct % num === 0){
+//       map[targetProduct / num] = i;
+//     }
+//   }
+  
+//   for(let i = 0; i < numbers.length; ++i){
+//     const num = numbers[i];
+//     if(num in map && map[num] !== i) return [map[num], i];
+//   }
+
+// };
+
+console.log(pairProduct([3, 2, 5, 4, 1], 8));
