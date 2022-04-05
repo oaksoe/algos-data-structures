@@ -314,3 +314,99 @@ const pairProduct = (numbers, targetProduct) => {
 // };
 
 console.log(pairProduct([3, 2, 5, 4, 1], 8));
+
+// intersection
+const intersection = (a, b) => {
+  const both = [];
+  const set = new Set(a);
+
+  for (const item of b) {
+    if (set.has(item)) {
+      both.push(item);
+    }
+  }
+
+  return both;
+}
+
+// Solution by Ashraf (Credit: Ashraf)
+// const intersection = (a, b) => {
+//     // O(n + m)
+//     // O(n)
+//     // do you know why the time complexity is O(n + m), 
+//     // although we looped through array b only once ?? :D 
+//     const result = []
+//     const setA = new Set(a);
+//     for(let item of b){
+//       if(setA.has(item)){
+//         result.push(item)
+//       }
+//     }
+    
+//     return result
+//   };
+
+console.log(intersection([4,2,1,6], [3,6,9,2,10]));
+
+// fiveSort
+const fiveSort = (nums) => {
+  let front = 0;
+  let rear = nums.length - 1;
+
+  while (front !== rear) {
+    if (nums[front] === 5) {
+      if (nums[rear] !== 5) {
+        nums[front] = nums[rear];
+        nums[rear] = 5;
+      }
+      rear -= 1;
+    } else {
+      front += 1;
+    }
+  } 
+
+  return nums;
+}
+
+// Not correct solution
+// const fiveSort = (nums) => {
+//   let count = 0;
+//   const newNums = [];
+
+//   for (const num of nums) {
+//     if (num === 5) {
+//       count += 1;
+//     } else {
+//       newNums.push(num);
+//     }
+//   }
+
+//   for (let i = 0; i < count; i += 1) {
+//     newNums.push(5);
+//   }
+
+//   return newNums;
+// }
+
+// Solution by Ashraf (Credit: Ashraf)
+// const fiveSort = (nums) => {
+//     let front = 0;
+//     let rear = nums.length - 1
+    
+//     while(front < rear){
+//       if(nums[front] === 5 && nums[rear] !==5){
+//         const temp = nums[front];
+//         nums[front] = nums[rear];
+//         nums[rear] = temp;
+//       }
+      
+//       while(nums[front] !== 5) ++front
+      
+//       while(nums[rear] === 5) --rear;
+//     }
+    
+//     return nums
+//   };
+
+console.log(fiveSort([12, 5, 1, 5, 12, 7]));
+console.log(fiveSort([5, 2, 5, 6, 5, 1, 10, 2, 5, 5]));

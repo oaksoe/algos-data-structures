@@ -17,3 +17,11 @@ If you think your solution has high complexity O(n*n), find an optimized solutio
 won't be accepted anyway!!!
 
 Common mistakes. Added memo but still time exceeded! Why?? Because forgot to pass it in recursive func call!!!
+
+space complexity => O(1)
+for (...)
+  for (...)
+
+new Array(1000) => 0(1000) => O(1)
+
+if it is not scaling according to the input, it is O(1)
