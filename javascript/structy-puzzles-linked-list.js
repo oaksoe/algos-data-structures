@@ -232,3 +232,97 @@ const zipperLists = (head1, head2) => {
 // // x -> y -> z
 
 console.log(zipperLists(a, x));
+
+// mergeLists
+const mergeLists = (head1, head2) => {
+  let head = head1;
+  let cur2 = head2;
+
+  if (head.val > head2.val) {
+    head = head2;
+    cur2 = head1;
+  }
+
+  let cur1 = head;
+
+  while (cur1 !== null && cur2 !== null) {
+    while (cur1.next !== null && cur1.next.val < cur2.val) {
+      cur1 = cur1.next;
+    }
+
+    const cur1Next = cur1.next;
+    cur1.next = cur2;
+
+    while (cur1Next !== null && cur2.next !== null && cur2.next.val < cur1Next.val) {
+      cur2 = cur2.next;
+    }
+
+    const cur2Next = cur2.next;
+
+    if (cur1Next !== null) {
+      cur2.next = cur1Next;
+    }
+
+    cur1 = cur1Next;
+    cur2 = cur2Next;
+  }
+
+  return head;
+};
+
+// 5 -> 7 -> 10 -> 12 -> 20 -> 28
+// 6 -> 8 -> 9 -> 25
+
+// const a = new Node(5);
+// const b = new Node(7);
+// const c = new Node(10);
+// const d = new Node(12);
+// const e = new Node(20);
+// const f = new Node(28);
+// a.next = b;
+// b.next = c;
+// c.next = d;
+// d.next = e;
+// e.next = f;
+// // 5 -> 7 -> 10 -> 12 -> 20 -> 28
+
+// const q = new Node(6);
+// const r = new Node(8);
+// const s = new Node(9);
+// const t = new Node(25);
+// q.next = r;
+// r.next = s;
+// s.next = t;
+// // 6 -> 8 -> 9 -> 25
+
+// const h = new Node(30);
+// // 30
+
+// const p = new Node(15);
+// const q = new Node(67);
+// p.next = q;
+// // 15 -> 67
+
+// const a = new Node(5);
+// const b = new Node(7);
+// const c = new Node(10);
+// const d = new Node(12);
+// const e = new Node(20);
+// const f = new Node(28);
+// a.next = b;
+// b.next = c;
+// c.next = d;
+// d.next = e;
+// e.next = f;
+// // 5 -> 7 -> 10 -> 12 -> 20 -> 28
+
+// const q = new Node(1);
+// const r = new Node(8);
+// const s = new Node(9);
+// const t = new Node(10);
+// q.next = r;
+// r.next = s;
+// s.next = t;
+// // 1 -> 8 -> 9 -> 10
+
+// console.log(JSON.stringify(mergeLists(a, q)));
