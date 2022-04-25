@@ -326,3 +326,75 @@ const mergeLists = (head1, head2) => {
 // // 1 -> 8 -> 9 -> 10
 
 // console.log(JSON.stringify(mergeLists(a, q)));
+
+// isUnivalueList
+// Iterative
+// const isUnivalueList = (head) => {
+//   let cur = head;
+//   const val = head.val;
+
+//   while (cur.next !== null) {
+//     if (val !== cur.next.val) {
+//       return false;
+//     }
+
+//     cur = cur.next;
+//   }
+
+//   return true;
+// }
+
+// Recursive
+const isUnivalueList = (head, val) => {
+  if (head === null) {
+    return true;
+  }
+
+  if (val && head.val !== val) {
+    return false;
+  }
+
+  return isUnivalueList(head.next, head.val);
+}
+
+// removeNode
+const removeNode = (head, targetVal) => {
+  if (head.val === targetVal) {
+    return head.next;
+  }
+
+  let cur = head;
+  let prev = null;
+
+  while (cur.val !== targetVal) {
+    prev = cur;
+    cur = cur.next;
+  }
+
+  prev.next = cur.next;
+  return head;
+}
+
+// insertNode
+const insertNode = (head, value, index) => {
+  const newNode = new Node(value);
+
+  if (index === 0) {
+    newNode.next = head;
+    return newNode;
+  }
+
+  let cur = head;
+  let curIndex = 0;
+
+  while(curIndex < index-1) {
+    cur = cur.next;
+    curIndex += 1;
+  }
+
+  const curNext = cur.next;
+  cur.next = newNode;
+  newNode.next = curNext;
+
+  return head;
+}
