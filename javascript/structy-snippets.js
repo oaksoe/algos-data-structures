@@ -16,7 +16,7 @@ const getNodeValue = (head, index) => {
 const getNodeValueRC = (head, index) => {
     if (head === null) return null;
     if (index === 0) return head.val;
-    return getNodeValue(head.next, index-1);
+    return getNodeValue(head.next, index - 1);
 }
 
 // Reverse Linked List
@@ -50,7 +50,7 @@ const zipperLists = (head1, head2) => {
     let current2 = head2;
     let count = 0;
 
-    while(current1 && current2) {
+    while (current1 && current2) {
         if (count % 2 === 0) {
             tail.next = current2;
             current2 = current2.next;
@@ -70,7 +70,7 @@ const zipperLists = (head1, head2) => {
     if (current2) {
         tail.next = current2;
     }
- 
+
     return head1;
 }
 
@@ -120,7 +120,7 @@ const depthFirstValuesRC = (root) => {
 // Always use iterative (not recursive) for breadth first
 const breadthFirstValues = (root) => {
     if (root === null) return [];
-    
+
     const queue = [root];
     const values = [];
 
@@ -139,10 +139,10 @@ const breadthFirstValues = (root) => {
 // Tree includes using breadth first iterative
 const treeIncludes = (root, target) => {
     const queue = [root];
-    
+
     while (queue.length > 0) {
         const current = queue.shift();
-        
+
         if (current.val === target) return true;
 
         if (current.left !== null) queue.push(current.left);
@@ -230,10 +230,10 @@ const buildGraph = (edges) => {
     const graph = {};
 
     for (let edge of edges) {
-        const [a,b] = edge;
+        const [a, b] = edge;
 
-        if (!(a in graph))  graph[a] = [];
-        if (!(b in graph))  graph[b] = [];
+        if (!(a in graph)) graph[a] = [];
+        if (!(b in graph)) graph[b] = [];
 
         graph[a].push(b);
         graph[b].push(a);
@@ -277,7 +277,7 @@ const connectedComponentCount = (graph) => {
 }
 
 const explore = (graph, current, visited) => {
-    if (visited.has(String(current)))   return false;
+    if (visited.has(String(current))) return false;
 
     visited.add(String(current));
 
@@ -304,7 +304,7 @@ const shortestPath = (edges, nodeA, nodeB) => {
         for (let neighbor of graph[node]) {
             if (!visited.has(neighbor)) {
                 visited.add(neighbor);
-                queue.push([neighbor, distance+1]);
+                queue.push([neighbor, distance + 1]);
             }
         }
     }
@@ -317,8 +317,8 @@ const islandCount = (grid) => {
     const visited = new Set();
     let count = 0;
 
-    for (let r = 0; r < grid.length; r+=1) {
-        for (let c = 0; c < grid[0].length; c+=1) {
+    for (let r = 0; r < grid.length; r += 1) {
+        for (let c = 0; c < grid[0].length; c += 1) {
             if (explore(grid, r, c, visited)) {
                 count += 1;
             }
@@ -332,7 +332,7 @@ const explore = (grid, r, c, visited) => {
     const rowInbounds = 0 <= r && r < grid.length;
     const colInbounds = 0 <= c && c < grid[0].length;
 
-    if (!rowInbounds || !colInbounds)   return false;
+    if (!rowInbounds || !colInbounds) return false;
 
     if (grid[r][c] === 'Water') return false;
 
@@ -342,10 +342,10 @@ const explore = (grid, r, c, visited) => {
 
     visited.add(pos);
 
-    explore(grid, r-1, c, visited);
-    explore(grid, r+1, c, visited);
-    explore(grid, r, c-1, visited);
-    explore(grid, r, c+1, visited);
+    explore(grid, r - 1, c, visited);
+    explore(grid, r + 1, c, visited);
+    explore(grid, r, c - 1, visited);
+    explore(grid, r, c + 1, visited);
 
     return true;
 }
@@ -355,26 +355,26 @@ const explore = (grid, r, c, visited) => {
 // Dynamic Programming
 const fib = (n) => {
     if (n <= 2) return 1;
-    return fib(n-1) + fib(n-2);
+    return fib(n - 1) + fib(n - 2);
 }
 
 // with memoization
 const fibMemo = (n, memo = {}) => {
-    if (n in memo)  return memo[n];
+    if (n in memo) return memo[n];
     if (n <= 2) return 1;
 
-    memo[n] = fibMemo(n-1, memo) + fibMemo(n-2, memo);
+    memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
     return memo[n];
 }
 
 // with tabulation
 const fibTab = (n) => {
-    const table = Array(n+1).fill(0);
+    const table = Array(n + 1).fill(0);
     table[1] = 1;
 
-    for(let i = 0; i <= n; i++) {
-        table[i+1] += table[i];
-        table[i+2] += table[i]; 
+    for (let i = 0; i <= n; i++) {
+        table[i + 1] += table[i];
+        table[i + 2] += table[i];
     }
 
     return table[n];
@@ -383,28 +383,28 @@ const fibTab = (n) => {
 // Grid traveller
 // How many ways to travel from top left cell to bottom right cell in m*n grid?
 // Traveller can either move right or down
-const gridTraveller = (m,n) => {
+const gridTraveller = (m, n) => {
     if (m === 1 && n === 1) return 1;
     if (m === 0 || n === 0) return 0;
-    return gridTraveller(m-1, n) + gridTraveller(m, n-1);
+    return gridTraveller(m - 1, n) + gridTraveller(m, n - 1);
 }
 
-const gridTravellerMemo = (m,n, memo={}) => {
+const gridTravellerMemo = (m, n, memo = {}) => {
     const key = m + ',' + n;
 
     if (key in memo) return memo[key];
 
     if (m === 1 && n === 1) return 1;
     if (m === 0 || n === 0) return 0;
-    
-    memo[key] = gridTraveller(m-1, n, memo) + gridTraveller(m, n-1, memo);
+
+    memo[key] = gridTraveller(m - 1, n, memo) + gridTraveller(m, n - 1, memo);
     return memo[key];
 }
 
 const gridTravellerTab = (m, n) => {
     const table = Array(m + 1)
         .fill()
-        .map(() => Array(n+1).fill(0));
+        .map(() => Array(n + 1).fill(0));
 
     table[1][1] = 1;
 
@@ -412,8 +412,8 @@ const gridTravellerTab = (m, n) => {
         for (let j = 0; j <= n; j++) {
             const current = table[i][j];
 
-            if (j+1 <=n)    table[i][j+1] += current;
-            if (i+1 <=m)    table[i+1][j] += current;
+            if (j + 1 <= n) table[i][j + 1] += current;
+            if (i + 1 <= m) table[i + 1][j] += current;
         }
     }
 

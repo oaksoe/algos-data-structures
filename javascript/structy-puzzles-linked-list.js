@@ -33,7 +33,7 @@ const linkedListValues = (head) => {
 //   if (head === null) {
 //     return [];
 //   }
-  
+
 //   return [head.val, ...linkedListValues(head.next)];
 // };
 
@@ -88,7 +88,7 @@ const sumList = (head) => {
 const linkedListFind = (head, target) => {
   let current = head;
 
-  while(current) {
+  while (current) {
     if (current.val === target) {
       return true;
     }
@@ -165,7 +165,7 @@ console.log(getNodeValue(a, 2));
 //   while(current) {
 //     next = current.next;
 //     current.next = prev;
-    
+
 //     prev = current;
 //     current = next;
 //   }
@@ -193,7 +193,7 @@ const zipperLists = (head1, head2) => {
   let current1 = head1;
   let current2 = head2;
 
-  while(current1 && current1.next && current2) {
+  while (current1 && current1.next && current2) {
     const current1Next = current1.next;
     const current2Next = current2.next;
 
@@ -387,7 +387,7 @@ const insertNode = (head, value, index) => {
   let cur = head;
   let curIndex = 0;
 
-  while(curIndex < index-1) {
+  while (curIndex < index - 1) {
     cur = cur.next;
     curIndex += 1;
   }
@@ -398,3 +398,106 @@ const insertNode = (head, value, index) => {
 
   return head;
 }
+
+const createLinkedList = (values) => {
+  if (values.length === 0) {
+    return null;
+  }
+
+  const head = new Node(values[0]);
+  let cur = head;
+
+  for (let i = 1; i < values.length; i += 1) {
+    cur.next = new Node(values[i]);
+    cur = cur.next;
+  }
+
+  return head;
+};
+
+// longest streak
+const longestStreak = (head) => {
+  if (head === null) {
+    return 0;
+  }
+
+  let longest = 0;
+  let curLongest = 0;
+  let cur = head;
+  let prev = null;
+
+  while (cur !== null) {
+    if (cur.val !== prev) {
+      prev = cur.val;
+      curLongest = 1;
+    } else {
+      curLongest += 1;
+    }
+
+    if (longest < curLongest) {
+      longest = curLongest;
+    }
+
+    cur = cur.next;
+  }
+
+  return longest;
+}
+
+// const a = new Node(3);
+// const b = new Node(3);
+// const c = new Node(3);
+// const d = new Node(3);
+// const e = new Node(9);
+// const f = new Node(9);
+
+// a.next = b;
+// b.next = c;
+// c.next = d;
+// d.next = e;
+// e.next = f;
+
+// 3 -> 3 -> 3 -> 3 -> 9 -> 9
+
+// console.log(longestStreak(a))
+
+// addLists
+const addLists = (head1, head2) => {
+  let head3 = new Node();
+
+  let current1 = head1;
+  let current2 = head2;
+  let current3 = head3;
+  let reminder = 0;
+
+  while (current1 && current2) {
+    const val = current1.val + current2.val + reminder;
+    reminder = Number.parseInt(val / 10);
+    current3.next = new Node(val % 10);
+    current3 = current3.next;
+    current1 = current1.next;
+    current2 = current2.next;
+  }
+
+  while (current1) {
+    const val = current1.val + reminder;
+    Number.parseInt(val / 10)
+    current3.next = new Node(val % 10);
+    current3 = current3.next;
+    current1 = current1.next
+  }
+
+  while (current2) {
+    const val = current2.val + reminder;
+    Number.parseInt(val / 10)
+    current3.next = new Node(val % 10);
+    current3 = current3.next;
+    current2 = current2.next
+  }
+
+  if (reminder > 0) {
+    current3.next = new Node(reminder);
+  }
+
+  return head3.next;
+};
